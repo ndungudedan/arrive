@@ -33,5 +33,5 @@ class MixedConstants {
 
   /// Load the environment variables from the .env file.
   /// Directly calls load from the dotenv package.
-  static Future<void> load() => dotenv.load();
+  static Future<void> load() => dotenv.load(fileName: 'assets/.env');
 }

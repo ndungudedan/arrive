@@ -38,7 +38,8 @@ dependencies:
   at_contacts_group_flutter: ^3.1.2
   at_contacts_flutter: ^3.1.2
   at_onboarding_flutter: ^3.1.2
-  at_location_flutter: ^3.1.1
+  at_location_flutter:
+    path: ../at_widgets/at_location_flutter
   at_events_flutter: ^3.1.1
   flutter_dotenv: ^5.0.2
 
@@ -47,7 +48,7 @@ dependency_overrides:
     git:
       url: https://github.com/atsign-foundation/at_tools.git
       path: at_utils
-      ref: git-386
+      #ref: git-386
       
 dev_dependencies:
   flutter_test:
@@ -62,7 +63,7 @@ flutter:
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   assets:
-    - .env
+    - assets/.env
     - assets/images/person1.png
     - assets/images/person2.png
     - assets/images/splash_bg.png
