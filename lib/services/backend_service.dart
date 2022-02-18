@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:at_onboarding_flutter/at_onboarding_flutter.dart';
-import 'package:atsign_location_app/common_components/error_dialog.dart';
 import 'package:atsign_location_app/services/nav_service.dart';
 import 'package:atsign_location_app/utils/constants/colors.dart';
 import 'package:atsign_location_app/utils/constants/constants.dart';
@@ -11,7 +10,6 @@ import 'package:atsign_location_app/view_models/location_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart' as path_provider;
 import 'package:atsign_location_app/routes/route_names.dart';
-import 'package:at_onboarding_flutter/screens/onboarding_widget.dart';
 import 'package:atsign_location_app/routes/routes.dart';
 import 'package:at_client/src/service/sync_service.dart';
 import 'package:at_client/src/service/sync_service_impl.dart';

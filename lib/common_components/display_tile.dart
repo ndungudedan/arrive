@@ -160,7 +160,7 @@ class _DisplayTileState extends State<DisplayTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name ?? widget.title,
+                    name ?? widget.subTitle,
                     style: TextStyle(
                         color:
                             Theme.of(context).primaryTextTheme.headline3.color,

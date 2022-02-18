@@ -1,9 +1,9 @@
+import 'dart:typed_data';
 import 'package:at_contact/at_contact.dart';
-import 'package:at_contacts_flutter/screens/contacts_screen.dart';
 import 'package:at_contacts_group_flutter/screens/group_contact_view/group_contact_view.dart';
-import 'package:at_location_flutter/at_location_flutter.dart';
-import 'package:at_location_flutter/common_components/custom_toast.dart';
-import 'package:at_location_flutter/service/sharing_location_service.dart';
+import 'package:at_location_flutter_local/common_components/custom_toast.dart';
+import 'package:at_location_flutter_local/service/sharing_location_service.dart';
+import 'package:at_location_flutter_local/utils/constants/init_location_service.dart';
 import 'package:atsign_location_app/common_components/custom_appbar.dart';
 import 'package:atsign_location_app/common_components/custom_button.dart';
 import 'package:atsign_location_app/common_components/custom_input_field.dart';
@@ -14,6 +14,7 @@ import 'package:atsign_location_app/utils/constants/text_strings.dart';
 import 'package:atsign_location_app/utils/constants/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:at_common_flutter/services/size_config.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ShareLocationSheet extends StatefulWidget {
   @override
@@ -22,6 +23,7 @@ class ShareLocationSheet extends StatefulWidget {
 
 class _ShareLocationSheetState extends State<ShareLocationSheet> {
   List<AtContact> selectedContacts = [];
+  Uint8List imageData;
   bool isLoading;
   String selectedOption;
 
@@ -34,14 +36,14 @@ class _ShareLocationSheetState extends State<ShareLocationSheet> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500,
+      height: 600,
       padding: EdgeInsets.all(25),
       child: ListView(
         children: [
           CustomAppBar(
             centerTitle: false,
             title: TextStrings.shareLocation,
-            action: PopButton(label:TextStrings.cancel),
+            action: PopButton(label: TextStrings.cancel),
           ),
           SizedBox(
             height: 25,
@@ -122,7 +124,7 @@ class _ShareLocationSheetState extends State<ShareLocationSheet> {
               : SizedBox(),
           SizedBox(height: 25),
           Text(
-           TextStrings.duration,
+            TextStrings.duration,
             style: CustomTextStyles().greyLabel14,
           ),
           SizedBox(height: 10),
@@ -180,6 +182,15 @@ class _ShareLocationSheetState extends State<ShareLocationSheet> {
             ),
           ),
           // Expanded(child: SizedBox()),
+          TextButton(
+              onPressed: () async {
+                final _picker = ImagePicker();
+                // Pick an image
+                final image =
+                    await _picker.pickImage(source: ImageSource.gallery);
+                imageData = await image.readAsBytes();
+              },
+              child: Text('Pick Image')),
           SizedBox(
             height: 100,
           ),
@@ -227,8 +238,13 @@ class _ShareLocationSheetState extends State<ShareLocationSheet> {
       await SharingLocationService()
           .sendShareLocationToGroup(selectedContacts, minutes: minutes);
     } else {
-      result = await sendShareLocationNotification(
-          selectedContacts[0].atSign, minutes);
+      if (imageData != null) {
+        result = await sendSharePhotoLocationNotification(
+            selectedContacts[0].atSign, minutes,imageData);
+      } else {
+        result = await sendShareLocationNotification(
+            selectedContacts[0].atSign, minutes);
+      }
     }
 
     if (result == null) {
@@ -247,7 +263,8 @@ class _ShareLocationSheetState extends State<ShareLocationSheet> {
       });
       Navigator.of(context).pop();
     } else {
-      CustomToast().show(TextStrings.somethingWentWrong, context, isError: true);
+      CustomToast()
+          .show(TextStrings.somethingWentWrong, context, isError: true);
       setState(() {
         isLoading = false;
       });
