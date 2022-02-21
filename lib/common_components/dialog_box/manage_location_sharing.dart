@@ -1,24 +1,25 @@
-import 'package:at_client/at_client.dart';
-import 'package:at_common_flutter/at_common_flutter.dart';
+import 'package:at_client_mobile/at_client_mobile.dart';
 import 'package:at_events_flutter/models/event_notification.dart';
 import 'package:at_events_flutter/services/event_key_stream_service.dart';
 import 'package:at_events_flutter/services/home_event_service.dart';
-import 'package:at_location_flutter/at_location_flutter.dart';
-import 'package:at_location_flutter/common_components/custom_toast.dart';
-import 'package:at_location_flutter/location_modal/location_notification.dart';
-import 'package:at_location_flutter/service/request_location_service.dart';
-import 'package:at_location_flutter/service/sharing_location_service.dart';
-import 'package:atsign_location_app/common_components/loading_widget.dart';
-import 'package:atsign_location_app/models/event_and_location.dart';
-import 'package:atsign_location_app/services/nav_service.dart';
-import 'package:atsign_location_app/utils/constants/text_strings.dart';
-import 'package:atsign_location_app/utils/constants/text_styles.dart';
-import 'package:atsign_location_app/view_models/location_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:at_location_flutter_local/common_components/custom_toast.dart';
+import 'package:at_location_flutter_local/location_modal/location_notification.dart';
+import 'package:at_location_flutter_local/service/request_location_service.dart';
+import 'package:at_location_flutter_local/service/sharing_location_service.dart';
+import 'package:at_location_flutter_local/utils/constants/init_location_service.dart';
+import 'package:at_onboarding_flutter/services/size_config.dart';
 import 'package:atsign_location_app/common_components/custom_button.dart'
     // ignore: library_prefixes
     as customButton;
+import 'package:atsign_location_app/models/event_and_location.dart';
+import 'package:atsign_location_app/services/nav_service.dart';
+import 'package:atsign_location_app/view_models/location_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../utils/constants/text_strings.dart';
+import '../../utils/constants/text_styles.dart';
+import '../loading_widget.dart';
 
 Future<void> manageLocationSharing() {
   var value = showDialog<void>(

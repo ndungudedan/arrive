@@ -2,19 +2,19 @@ import 'package:at_client_mobile/at_client_mobile.dart';
 import 'package:at_commons/at_commons.dart';
 import 'package:at_events_flutter/models/event_key_location_model.dart';
 import 'package:at_events_flutter/services/at_event_notification_listener.dart';
-import 'package:at_location_flutter/common_components/custom_toast.dart';
-import 'package:at_location_flutter/service/at_location_notification_listener.dart';
+import 'package:at_location_flutter_local/common_components/custom_toast.dart';
+import 'package:at_location_flutter_local/location_modal/key_location_model.dart';
+import 'package:at_location_flutter_local/service/at_location_notification_listener.dart';
+import 'package:at_location_flutter_local/service/send_location_notification.dart';
+import 'package:at_location_flutter_local/utils/constants/init_location_service.dart';
 import 'package:atsign_location_app/common_components/dialog_box/location_prompt_dialog.dart';
 import 'package:atsign_location_app/data_services/hive/hive_db.dart';
 import 'package:atsign_location_app/models/event_and_location.dart';
 import 'package:atsign_location_app/services/nav_service.dart';
 import 'package:atsign_location_app/utils/constants/constants.dart';
 import 'package:atsign_location_app/view_models/base_model.dart';
-import 'package:at_location_flutter/at_location_flutter.dart';
 import 'package:at_events_flutter/at_events_flutter.dart';
-import 'package:at_location_flutter/location_modal/key_location_model.dart';
 import 'package:flutter/material.dart';
-import 'package:at_location_flutter/service/send_location_notification.dart';
 
 class LocationProvider extends BaseModel {
   LocationProvider();
@@ -95,6 +95,65 @@ class LocationProvider extends BaseModel {
         .map((e) => EventAndLocationHybrid(NotificationModelType.LocationModel,
             locationKeyModel: e))
         .toList();
+    allLocationNotifications.forEach(
+      (element) async {
+        if (element.locationKeyModel.locationNotificationModel.hasImageData) {
+          var allResponse = await AtClientManager.getInstance()
+              .atClient
+              .getKeys(regex: 'imagekey-');
+          await Future.forEach(allResponse, (String key) async {
+            var _atKey = getAtKey(key);
+
+            var keyParts = key.split(':');
+            if (keyParts[0] == 'public') {
+              _atKey.key = keyParts[2].split('.').first;
+             // _atKey.sharedWith = keyParts[2].split('@').last;
+              _atKey.metadata.namespaceAware = true;
+              if (element.locationKeyModel.locationNotificationModel.to !=
+                  null) {
+                _atKey.metadata.ttr = element
+                    .locationKeyModel.locationNotificationModel.to
+                    .difference(
+                        element.locationKeyModel.locationNotificationModel.from)
+                    .inMinutes;
+                _atKey.metadata.ttl = element
+                    .locationKeyModel.locationNotificationModel.to
+                    .difference(
+                        element.locationKeyModel.locationNotificationModel.from)
+                    .inMinutes;
+                _atKey.metadata.expiresAt =
+                    element.locationKeyModel.locationNotificationModel.to;
+              }
+
+              _atKey.metadata.isBinary = true;
+              _atKey.metadata.isPublic = true;
+              _atKey.metadata.isEncrypted = false;
+              _atKey.namespace = keyParts[2].split('.').last.split('@').first;
+            }
+
+            if (_atKey.key ==
+                element.locationKeyModel.locationNotificationModel.imageKey) {
+              var value = await AtClientManager.getInstance()
+                  .atClient
+                  .get(_atKey)
+                  .catchError(
+                      // ignore: invalid_return_type_for_catch_error
+                      (e) => print('error in in key_stream_service get $e'));
+              if (value != null) {
+                try {
+                  if ((value.value != null) && (value.value != 'null')) {
+                    element.locationKeyModel.locationNotificationModel
+                        .imageData = value.value;
+                  }
+                } catch (e) {
+                  print('yoo error :$e');
+                }
+              }
+            }
+          });
+        }
+      },
+    );
     setStatus(GET_ALL_NOTIFICATIONS, Status.Done);
   }
 

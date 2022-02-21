@@ -20,12 +20,12 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.0
-  provider: ^4.3.2+2
+  provider: ^6.0.2
   sliding_up_panel: ^2.0.0+1
   hive: ^2.0.4
   hive_flutter: ^1.0.0
   latlong2: ^0.8.0
-  package_info: ^0.4.3+4
+  package_info: ^2.0.2
   fluttertoast: ^8.0.3
   pedantic: ^1.11.0
   image_picker: ^0.8.4+8
@@ -38,8 +38,7 @@ dependencies:
   at_lookup: ^3.0.7
   at_contacts_group_flutter: ^3.1.2
   at_contacts_flutter: ^3.1.2
-  at_location_flutter: ^3.1.2
-  at_onboarding_flutter: ^3.1.4
+  at_onboarding_flutter: ^4.0.0
   at_location_flutter_local:
     path: ../at_widgets/at_location_flutter_local
   at_events_flutter: ^3.1.2

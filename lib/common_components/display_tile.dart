@@ -1,15 +1,16 @@
 import 'dart:typed_data';
+
 import 'package:at_client_mobile/at_client_mobile.dart';
+import 'package:at_common_flutter/services/size_config.dart';
 import 'package:at_contact/at_contact.dart';
 import 'package:at_contacts_flutter/services/contact_service.dart';
-import 'package:at_location_flutter/common_components/contacts_initial.dart';
+import 'package:at_contacts_flutter/utils/init_contacts_service.dart';
+import 'package:at_location_flutter_local/common_components/contacts_initial.dart';
 import 'package:atsign_location_app/screens/contacts/add_contact.dart';
 import 'package:atsign_location_app/utils/constants/colors.dart';
 import 'package:atsign_location_app/utils/constants/text_strings.dart';
 import 'package:atsign_location_app/utils/constants/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:at_contacts_flutter/utils/init_contacts_service.dart';
-import 'package:at_common_flutter/services/size_config.dart';
 
 class DisplayTile extends StatefulWidget {
   final String title, semiTitle, subTitle, atsignCreator, invitedBy;
@@ -174,10 +175,13 @@ class _DisplayTileState extends State<DisplayTile> {
                   widget.semiTitle != null
                       ? Text(
                           widget.semiTitle,
-                          style: (widget.semiTitle == TextStrings.actionRequired ||
-                                      widget.semiTitle == TextStrings.requestDeclined ) ||
+                          style: (widget.semiTitle ==
+                                          TextStrings.actionRequired ||
+                                      widget.semiTitle ==
+                                          TextStrings.requestDeclined) ||
                                   (widget.semiTitle == TextStrings.cancelled ||
-                                      (widget.semiTitle == TextStrings.requestRejected))
+                                      (widget.semiTitle ==
+                                          TextStrings.requestRejected))
                               ? CustomTextStyles().orange12
                               : CustomTextStyles().darkGrey12,
                           maxLines: 1,
