@@ -2,11 +2,11 @@ import 'package:at_client_mobile/at_client_mobile.dart';
 import 'package:at_events_flutter/models/event_notification.dart';
 import 'package:at_events_flutter/services/event_key_stream_service.dart';
 import 'package:at_events_flutter/services/home_event_service.dart';
-import 'package:at_location_flutter_local/common_components/custom_toast.dart';
-import 'package:at_location_flutter_local/location_modal/location_notification.dart';
-import 'package:at_location_flutter_local/service/request_location_service.dart';
-import 'package:at_location_flutter_local/service/sharing_location_service.dart';
-import 'package:at_location_flutter_local/utils/constants/init_location_service.dart';
+import 'package:at_location_flutter/common_components/custom_toast.dart';
+import 'package:at_location_flutter/location_modal/location_notification.dart';
+import 'package:at_location_flutter/service/request_location_service.dart';
+import 'package:at_location_flutter/service/sharing_location_service.dart';
+import 'package:at_location_flutter/utils/constants/init_location_service.dart';
 import 'package:at_onboarding_flutter/services/size_config.dart';
 import 'package:atsign_location_app/common_components/custom_button.dart'
     // ignore: library_prefixes
@@ -217,7 +217,8 @@ class __ManageLocationSharingState extends State<_ManageLocationSharing> {
       result = await SharingLocationService()
           .updateWithShareLocationAcknowledge(locationNotificationModel,
               isSharing: _value);
-    } else if (locationNotificationModel.key.contains(TextStrings.requestLocation)) {
+    } else if (locationNotificationModel.key
+        .contains(TextStrings.requestLocation)) {
       result = await RequestLocationService().requestLocationAcknowledgment(
           locationNotificationModel, true,
           isSharing: _value);
@@ -229,8 +230,8 @@ class __ManageLocationSharingState extends State<_ManageLocationSharing> {
           getMyLocationInfo(locationNotificationModel);
       setState(() {});
     } else {
-      CustomToast()
-          .show(TextStrings.somethingWentWrongPleaseTryAgain, context, isError: true);
+      CustomToast().show(TextStrings.somethingWentWrongPleaseTryAgain, context,
+          isError: true);
     }
   }
 
@@ -318,8 +319,8 @@ class __ManageLocationSharingState extends State<_ManageLocationSharing> {
       setState(() {});
       Navigator.of(context).pop();
     } else {
-      CustomToast()
-          .show(TextStrings.somethingWentWrongPleaseTryAgain, context, isError: true);
+      CustomToast().show(TextStrings.somethingWentWrongPleaseTryAgain, context,
+          isError: true);
     }
   }
 }

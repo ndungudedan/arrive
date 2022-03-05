@@ -1,19 +1,21 @@
 import 'dart:typed_data';
+
+import 'package:at_common_flutter/services/size_config.dart';
 import 'package:at_contact/at_contact.dart';
 import 'package:at_contacts_group_flutter/screens/group_contact_view/group_contact_view.dart';
-import 'package:at_location_flutter_local/common_components/custom_toast.dart';
-import 'package:at_location_flutter_local/service/sharing_location_service.dart';
-import 'package:at_location_flutter_local/utils/constants/init_location_service.dart';
+import 'package:at_location_flutter/common_components/custom_toast.dart';
+import 'package:at_location_flutter/service/sharing_location_service.dart';
+import 'package:at_location_flutter/utils/constants/init_location_service.dart';
 import 'package:atsign_location_app/common_components/custom_appbar.dart';
 import 'package:atsign_location_app/common_components/custom_button.dart';
 import 'package:atsign_location_app/common_components/custom_input_field.dart';
 import 'package:atsign_location_app/common_components/overlapping-contacts.dart';
 import 'package:atsign_location_app/common_components/pop_button.dart';
+import 'package:atsign_location_app/services/backend_service.dart';
 import 'package:atsign_location_app/utils/constants/colors.dart';
 import 'package:atsign_location_app/utils/constants/text_strings.dart';
 import 'package:atsign_location_app/utils/constants/text_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:at_common_flutter/services/size_config.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ShareLocationSheet extends StatefulWidget {
@@ -188,7 +190,9 @@ class _ShareLocationSheetState extends State<ShareLocationSheet> {
                 // Pick an image
                 final image =
                     await _picker.pickImage(source: ImageSource.gallery);
+
                 imageData = await image.readAsBytes();
+                //sendFile(selectedContacts[0].atSign, image.path);
               },
               child: Text('Pick Image')),
           SizedBox(
@@ -211,6 +215,34 @@ class _ShareLocationSheetState extends State<ShareLocationSheet> {
         ],
       ),
     );
+  }
+
+  Future<Map<String, Object>> sendFile(String atSign, String filePath) async {
+    if (!atSign.contains('@')) {
+      atSign = '@' + atSign;
+    }
+    print('Sending file => $atSign $filePath');
+    var response = {'status': false, 'msg': ''};
+
+    var result = await BackendService.getInstance()
+        .atClientServiceInstance
+        .atClientManager
+        .atClient
+        .stream(atSign, filePath);
+    print('sendfile result => $result');
+    if (result.status.toString() == 'AtStreamStatus.COMPLETE') {
+      response['status'] = true;
+      response['msg'] = 'completed';
+      return response;
+    } else if (result.status.toString() == 'AtStreamStatus.NO_ACK') {
+      response['status'] = false;
+      response['msg'] = 'no_ack';
+      return response;
+    } else {
+      response['status'] = false;
+      response['msg'] = 'unknown';
+      return response;
+    }
   }
 
   // ignore: always_declare_return_types
@@ -240,7 +272,7 @@ class _ShareLocationSheetState extends State<ShareLocationSheet> {
     } else {
       if (imageData != null) {
         result = await sendSharePhotoLocationNotification(
-            selectedContacts[0].atSign, minutes,imageData);
+            selectedContacts[0].atSign, minutes, imageData);
       } else {
         result = await sendShareLocationNotification(
             selectedContacts[0].atSign, minutes);

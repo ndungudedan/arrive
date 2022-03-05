@@ -1,7 +1,7 @@
 import 'package:at_client/at_client.dart';
 import 'package:at_common_flutter/services/size_config.dart';
 import 'package:at_events_flutter/services/event_key_stream_service.dart';
-import 'package:at_location_flutter_local/service/key_stream_service.dart';
+import 'package:at_location_flutter/service/key_stream_service.dart';
 import 'package:atsign_location_app/common_components/custom_button.dart';
 import 'package:atsign_location_app/models/event_and_location.dart';
 import 'package:atsign_location_app/services/nav_service.dart';

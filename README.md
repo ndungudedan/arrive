@@ -2,6 +2,9 @@
 
 ### Now for a little internet optimism
 
+## Few Changes On Sharing Image Implementation
+![grab-task-gif](app_gif.gif)
+
 # @‎rrive README
 
 @‎rrive makes peer-to-peer encrypted location sharing easy. 

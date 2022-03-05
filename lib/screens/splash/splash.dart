@@ -56,7 +56,7 @@ class _SplashState extends State<Splash> {
             atClientPreference: BackendService.getInstance().atClientPreference,
             domain: MixedConstants.ROOT_DOMAIN,
             appColor: Color.fromARGB(255, 240, 94, 62),
-            rootEnvironment: RootEnvironment.Production,
+            rootEnvironment: RootEnvironment.Staging,
             onboard: (value, atsign) async {
               await AtClientManager.getInstance().setCurrentAtSign(
                   atsign,
@@ -230,7 +230,7 @@ class _SplashState extends State<Splash> {
                                                     255, 240, 94, 62),
                                                 onboard: onOnboardCompletes,
                                                 rootEnvironment:
-                                                    RootEnvironment.Production,
+                                                    RootEnvironment.Staging,
                                                 onError: (error) {
                                                   print(
                                                       'error in onboard plugin:$error');

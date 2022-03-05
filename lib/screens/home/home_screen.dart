@@ -3,27 +3,27 @@
 import 'dart:async';
 
 import 'package:at_client_mobile/at_client_mobile.dart';
+import 'package:at_common_flutter/services/size_config.dart';
+import 'package:at_contacts_flutter/utils/init_contacts_service.dart';
 import 'package:at_contacts_group_flutter/at_contacts_group_flutter.dart';
 import 'package:at_events_flutter/models/event_notification.dart';
 import 'package:at_events_flutter/screens/create_event.dart';
-import 'package:at_events_flutter/services/event_key_stream_service.dart';
 import 'package:at_events_flutter/services/home_event_service.dart';
-import 'package:at_location_flutter_local/utils/constants/constants.dart'
+import 'package:at_location_flutter/location_modal/location_notification.dart';
+import 'package:at_location_flutter/map_content/flutter_map/flutter_map.dart';
+import 'package:at_location_flutter/service/home_screen_service.dart';
+import 'package:at_location_flutter/service/my_location.dart';
+import 'package:at_location_flutter/show_location.dart';
+import 'package:at_location_flutter/utils/constants/constants.dart'
     as LocationPackageConstants;
-import 'package:at_location_flutter_local/utils/constants/init_location_service.dart';
-import 'package:at_location_flutter_local/location_modal/location_notification.dart';
-import 'package:at_location_flutter_local/map_content/flutter_map/flutter_map.dart';
-import 'package:at_location_flutter_local/service/home_screen_service.dart';
-import 'package:at_location_flutter_local/service/my_location.dart';
-import 'package:at_location_flutter_local/show_location.dart';
-import 'package:atsign_location_app/common_components/custom_button.dart';
-import 'package:atsign_location_app/common_components/dialog_box/delete_dialog_confirmation.dart';
-import 'package:atsign_location_app/models/event_and_location.dart';
+import 'package:at_location_flutter/utils/constants/init_location_service.dart';
 import 'package:atsign_location_app/common_components/bottom_sheet/bottom_sheet.dart';
+import 'package:atsign_location_app/common_components/dialog_box/delete_dialog_confirmation.dart';
 import 'package:atsign_location_app/common_components/display_tile.dart';
 import 'package:atsign_location_app/common_components/floating_icon.dart';
 import 'package:atsign_location_app/common_components/provider_handler.dart';
 import 'package:atsign_location_app/common_components/tasks.dart';
+import 'package:atsign_location_app/models/event_and_location.dart';
 import 'package:atsign_location_app/screens/request_location/request_location_sheet.dart';
 import 'package:atsign_location_app/screens/share_location/share_location_sheet.dart';
 import 'package:atsign_location_app/screens/sidebar/sidebar.dart';
@@ -35,13 +35,14 @@ import 'package:atsign_location_app/utils/constants/text_strings.dart';
 import 'package:atsign_location_app/utils/constants/text_styles.dart';
 import 'package:atsign_location_app/view_models/location_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:at_common_flutter/services/size_config.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:at_contacts_flutter/utils/init_contacts_service.dart';
+
+import '../../routes/route_names.dart';
+import '../../routes/routes.dart';
 
 enum FilterScreenType { Event, Location }
 enum EventFilters { Sent, Received, None }
@@ -200,6 +201,12 @@ class _HomeScreenState extends State<HomeScreen>
       mapController.move(myLatLng, 8);
     }
   }
+  void openNotificationStatus(){
+ SetupRoutes.push(
+                  context,
+                  Routes.NOTIFICATION_STATUS_SCREEN,
+                );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -270,6 +277,16 @@ class _HomeScreenState extends State<HomeScreen>
                         icon: Icons.zoom_out_map, onPressed: zoomOutFn),
                   )
                 : SizedBox(),
+             Provider.of<LocationProvider>(context).allLocationNotifications.isNotEmpty ?   Positioned(
+                    top: 160,
+                    right: 0,
+                    child: AnimatedOpacity(
+                      opacity: 0.33,
+               duration: Duration(microseconds: 500),
+                      child: FloatingIcon(
+                          icon: Icons.sailing, onPressed: openNotificationStatus),
+                    ),
+                  ) : SizedBox(),
             contactsLoaded
                 ? ProviderHandler<LocationProvider>(
                     key: UniqueKey(),
@@ -637,6 +654,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   false);
                             }
                           },
+                          
                         ),
                       ),
                       Divider()

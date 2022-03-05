@@ -5,7 +5,7 @@ import 'package:at_common_flutter/services/size_config.dart';
 import 'package:at_contact/at_contact.dart';
 import 'package:at_contacts_flutter/services/contact_service.dart';
 import 'package:at_contacts_flutter/utils/init_contacts_service.dart';
-import 'package:at_location_flutter_local/common_components/contacts_initial.dart';
+import 'package:at_location_flutter/common_components/contacts_initial.dart';
 import 'package:atsign_location_app/screens/contacts/add_contact.dart';
 import 'package:atsign_location_app/utils/constants/colors.dart';
 import 'package:atsign_location_app/utils/constants/text_strings.dart';
@@ -161,7 +161,7 @@ class _DisplayTileState extends State<DisplayTile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name ?? widget.subTitle,
+                    name ?? widget.title,
                     style: TextStyle(
                         color:
                             Theme.of(context).primaryTextTheme.headline3.color,

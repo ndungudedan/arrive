@@ -148,7 +148,7 @@ class BackendService {
           atClientPreference: atClientPrefernce,
           domain: MixedConstants.ROOT_DOMAIN,
           appColor: Color.fromARGB(255, 240, 94, 62),
-          rootEnvironment: RootEnvironment.Production,
+          rootEnvironment: RootEnvironment.Staging,
           onboard: (value, atsign) async {
             await AtClientManager.getInstance().setCurrentAtSign(
                 atsign,

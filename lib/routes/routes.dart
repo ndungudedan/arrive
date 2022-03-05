@@ -9,6 +9,8 @@ import 'package:atsign_location_app/screens/website_webview/website_webview.dart
 import 'package:atsign_location_app/utils/constants/constants.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/home/notification_status_screen.dart';
+
 class SetupRoutes {
   static String initialRoute = Routes.SPLASH;
   static String currentAtSign;
@@ -39,6 +41,7 @@ class SetupRoutes {
       Routes.BLOCKED_CONTACT_SCREEN: (context) {
         return BlockedScreen();
       },
+      Routes.NOTIFICATION_STATUS_SCREEN: (context) => NotificationStatusScreen(),
     };
   }
 

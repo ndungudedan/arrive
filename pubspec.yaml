@@ -29,6 +29,7 @@ dependencies:
   fluttertoast: ^8.0.3
   pedantic: ^1.11.0
   image_picker: ^0.8.4+8
+  story_view:
 
 
   at_client_mobile: ^3.1.6
@@ -39,11 +40,10 @@ dependencies:
   at_contacts_group_flutter: ^4.0.0
   at_contacts_flutter: ^4.0.0
   at_onboarding_flutter: ^4.0.0
-  at_location_flutter: ^3.1.2
+  #at_location_flutter: ^3.1.2
   at_events_flutter: ^3.1.2
   flutter_dotenv: ^5.0.2
-  #at_location_flutter_local:
-    #path: ../at_widgets/at_location_flutter_local
+  
       
 dev_dependencies:
   flutter_test:
@@ -52,19 +52,25 @@ dev_dependencies:
 dependency_overrides:
   biometric_storage: ^4.0.1
   permission_handler: ^9.2.0
+  at_location_flutter:
+    #path: ../at_widgets/at_location_flutter
+    git:
+      url: https://github.com/ndungudedan/at_widgets
+      ref: dedan
+      path: at_location_flutter
   at_contacts_flutter:
     git:
-      url: git@github.com:atsign-foundation/at_widgets.git
+      url: https://github.com/ndungudedan/at_widgets
       ref: trunk
       path: at_contacts_flutter
   at_contacts_group_flutter:
     git:
-      url: git@github.com:atsign-foundation/at_widgets.git
+      url: https://github.com/ndungudedan/at_widgets
       ref: trunk
       path: at_contacts_group_flutter
   at_onboarding_flutter:
     git:
-      url: git@github.com:atsign-foundation/at_widgets.git
+      url: https://github.com/ndungudedan/at_widgets
       ref: trunk
       path: at_onboarding_flutter   
 
