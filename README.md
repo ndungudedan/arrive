@@ -3,7 +3,7 @@
 ### Now for a little internet optimism
 
 ## Few Changes On Sharing Image Implementation
-![grab-task-gif](app_gif.gif)
+<img src="./app_gif.gif" width="250" height="250">
 
 # @‎rrive README
 
