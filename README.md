@@ -3,7 +3,7 @@
 ### Now for a little internet optimism
 
 ## Few Changes On Sharing Image Implementation
-<img src="./app_gif.gif" width="250" height="650">
+<img src="./app_gif.gif" width="300" height="600">
 
 # @‎rrive README
 
